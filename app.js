@@ -130,4 +130,14 @@ async function connectDB() {
 
 connectDB();
 
+app.get('/genres', async (req, res) => {
+    try {
+        const genres = await moviesCollection.distinct('genres');
+        console.log('Available genres:', genres);
+        res.json({ genres });
+    } catch (err) {
+        console.error('Error fetching genres:', err);
+        res.status(500).send('Error fetching genres');
+    }
+});
 console.log(`Visit http://localhost:${PORT} to access the application`);

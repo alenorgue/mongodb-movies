@@ -1,11 +1,48 @@
 <nav>   
     <form method="get" action="/movies">
-        <label class="icon-label"><span class="icon">🎬</span><input type="text" name="title" placeholder="Buscar película por título"></label>
+        <label class="icon-label">
+            <span class="icon">🎬</span>
+            <select name="type">
+                <option value="">Tipo</option>
+                <option value="movie">Película</option>
+                <option value="series">Serie</option>
+            </select>
+        </label>
+         <label class="icon-label"><span class="icon">🎬</span><input type="text" name="title" placeholder="Buscar película por título"></label>
         <label class="icon-label"><span class="icon">📅</span><input type="number" name="yearFrom" placeholder="Año desde" min="1800" max="2100"></label>
         <label class="icon-label"><span class="icon">📅</span><input type="number" name="yearTo" placeholder="Año hasta" min="1800" max="2100"></label>
-        <label class="icon-label"><span class="icon">🏷️</span><input type="text" name="genre" placeholder="Género"></label>
-        <label class="icon-label"><span class="icon">🎬</span><input type="text" name="type" placeholder="Tipo de película (ej. Movie, Series, Episode)"></label>
-        <label class="icon-label"><span class="icon">🎥</span><input type="text" name="director" placeholder="Director"></label>
+        <label class="icon-label">
+            <span class="icon">🏷️</span>
+            <select name="genre">
+            <option value="">Género</option>
+            <option value="Action">Acción</option>
+            <option value="Adventure">Aventura</option>
+            <option value="Animation">Animación</option>
+            <option value="Biography">Biografía</option>
+            <option value="Comedy">Comedia</option>
+            <option value="Crime">Crimen</option>
+            <option value="Documentary">Documental</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Familiar</option>
+            <option value="Fantasy">Fantasía</option>
+            <option value="Film-Noir">Cine negro</option>
+            <option value="History">Historia</option>
+            <option value="Horror">Terror</option>
+            <option value="Music">Música</option>
+            <option value="Musical">Musical</option>
+            <option value="Mystery">Misterio</option>
+            <option value="News">Noticias</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi">Ciencia ficción</option>
+            <option value="Short">Corto</option>
+            <option value="Sport">Deporte</option>
+            <option value="Talk-Show">Talk-Show</option>
+            <option value="Thriller">Suspense</option>
+            <option value="War">Guerra</option>
+            <option value="Western">Western</option>
+            </select>
+        </label>
+       <label class="icon-label"><span class="icon">🎥</span><input type="text" name="director" placeholder="Director"></label>
         <label class="icon-label"><span class="icon">👥</span><input type="text" name="cast" placeholder="Reparto"></label>
         <label class="icon-label"><span class="icon">📝</span><input type="text" name="plot" placeholder="Sinopsis"></label>
         <button type="submit"><span class="icon">🔍</span>Buscar</button>

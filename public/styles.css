@@ -193,6 +193,63 @@ nav button[type="submit"] .icon {
   margin-right: 0.3em;
 }
 
+nav select {
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--movie-bg);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.2s, background 0.2s;
+  margin-right: 0.5rem;
+}
+nav select:focus {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--container-bg);
+}
+nav select[name="genre"] {
+  padding-left: 2.2em;
+  background-repeat: no-repeat;
+  background-position: 0.5em center;
+  background-size: 1.3em 1.3em;
+}
+nav select[name="genre"] option[value="Action"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52b.png'); }
+nav select[name="genre"] option[value="Adventure"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3d5.png'); }
+nav select[name="genre"] option[value="Animation"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3a8.png'); }
+nav select[name="genre"] option[value="Biography"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f464.png'); }
+nav select[name="genre"] option[value="Comedy"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f923.png'); }
+nav select[name="genre"] option[value="Crime"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52a.png'); }
+nav select[name="genre"] option[value="Documentary"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4d6.png'); }
+nav select[name="genre"] option[value="Drama"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f622.png'); }
+nav select[name="genre"] option[value="Family"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f46a.png'); }
+nav select[name="genre"] option[value="Fantasy"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/2728.png'); }
+nav select[name="genre"] option[value="Film-Noir"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f575.png'); }
+nav select[name="genre"] option[value="History"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3db.png'); }
+nav select[name="genre"] option[value="Horror"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f47b.png'); }
+nav select[name="genre"] option[value="Music"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3b5.png'); }
+nav select[name="genre"] option[value="Musical"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3bc.png'); }
+nav select[name="genre"] option[value="Mystery"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52e.png'); }
+nav select[name="genre"] option[value="News"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4f0.png'); }
+nav select[name="genre"] option[value="Romance"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f496.png'); }
+nav select[name="genre"] option[value="Sci-Fi"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f680.png'); }
+nav select[name="genre"] option[value="Short"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/23f1.png'); }
+nav select[name="genre"] option[value="Sport"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/26bd.png'); }
+nav select[name="genre"] option[value="Talk-Show"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4fa.png'); }
+nav select[name="genre"] option[value="Thriller"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52b.png'); }
+nav select[name="genre"] option[value="War"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6e1.png'); }
+nav select[name="genre"] option[value="Western"] { background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f920.png'); }
+
+body.dark-mode nav select {
+  background: #23272a;
+  color: var(--text-color);
+  border-color: #2c2f33;
+}
+body.dark-mode nav select:focus {
+  background: #181a1b;
+  border-color: var(--accent);
+}
+
 body.dark-mode nav {
   background: var(--container-bg);
   border-right: 2px solid #23272a;
