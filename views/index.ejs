@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Movies</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>MongoDB Movies</h1>
+        <button class="toggle-theme-btn" onclick="toggleTheme()">
+          <span id="theme-label">Modo oscuro</span>
+          <span class="toggle-switch">
+            <span class="toggle-slider"></span>
+          </span>
+        </button>
+        <div id="movies-list">
+            <% movies.forEach(function(movie) { %>
+                <div class="movie">
+                    <h2><%= movie.title %></h2>
+                    <% if (movie.poster) { %>
+                        <img src="<%= movie.poster %>" alt="<%= movie.title %> poster" style="max-width:200px;">
+                    <% } %>
+                    <p>Fecha de lanzamiento: <%= movie.released ? movie.released.toISOString().split('T')[0] : 'N/A' %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <script>
+      function toggleTheme() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.getElementById('theme-label').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+      }
+      // Mantener preferencia al recargar
+      if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-label').textContent = 'Modo claro';
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* styles.css para index.ejs: modo claro y modo oscuro */
+:root {
+  --bg-color: #f4f4f4;
+  --text-color: #222;
+  --container-bg: #fff;
+  --movie-bg: #e9e9e9;
+  --accent: #007bff;
+}
+body.dark-mode {
+  --bg-color: #181a1b;
+  --text-color: #f4f4f4;
+  --container-bg: #23272a;
+  --movie-bg: #2c2f33;
+  --accent: #00bfff;
+}
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+.container {
+  background: var(--container-bg);
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--accent);
+}
+#movies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.movie {
+  background: var(--movie-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  text-align: center;
+  transition: background 0.3s;
+}
+.movie img {
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+}
+.movie h2 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0.3rem 0;
+  color: var(--accent);
+}
+.movie p {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.98rem;
+}
+.toggle-theme-btn {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  background: var(--container-bg);
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.3rem 1.2rem 0.3rem 0.6rem;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.toggle-theme-btn:hover {
+  background: #005fa3;
+}
+.toggle-theme-btn .toggle-switch {
+  margin-left: 0.7rem;
+  width: 38px;
+  height: 22px;
+  background: var(--movie-bg);
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.2s;
+  border: 1.5px solid var(--accent);
+  display: inline-block;
+}
+.toggle-theme-btn .toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  transition: left 0.2s, background 0.2s;
+}
+body.dark-mode .toggle-theme-btn {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+body.dark-mode .toggle-theme-btn .toggle-switch {
+  background: #222b;
+}
+body.dark-mode .toggle-theme-btn .toggle-slider {
+  background: var(--accent);
+  left: 18px;
+}
