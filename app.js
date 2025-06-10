@@ -27,12 +27,19 @@ app.get('/', async (req, res) => {
 
     console.log('Fetching movies from the database...');
     try {
-        const movies = await moviesCollection.find({}, {
-            projection: { title: 1, poster: 1, released: 1 }
-        })
-        .sort({ released: -1 })
-        .limit(10)
-        .toArray();
+        const movies = await moviesCollection.find(
+    {
+        title: { $exists: true, $ne: null },
+        poster: { $exists: true, $ne: null },
+        released: { $exists: true, $ne: null }
+    },
+    {
+        projection: { title: 1, poster: 1, released: 1 }
+    }
+)
+.sort({ released: -1 })
+.limit(10)
+.toArray();
         console.log('Movies fetched successfully');
         console.log(movies);
         // Render the index.ejs template with the movies data
