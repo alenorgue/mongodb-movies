@@ -1,0 +1,194 @@
+/* styles-add-form.css: estilos para el formulario de añadir película */
+:root {
+  --bg-color: #f4f4f4;
+  --text-color: #222;
+  --container-bg: #fff;
+  --movie-bg: #e9e9e9;
+  --accent: #007bff;
+}
+body.dark-mode {
+  --bg-color: #181a1b;
+  --text-color: #f4f4f4;
+  --container-bg: #23272a;
+  --movie-bg: #2c2f33;
+  --accent: #00bfff;
+}
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  max-height: 90vh;
+}
+.add-form {
+  background: var(--container-bg);
+  max-width: 700px;
+  margin: 4vh auto 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+.add-form h2 {
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+}
+.add-form label.icon-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  width: 100%;
+  font-size: 1.08rem;
+  color: var(--accent);
+  margin-bottom: 0.2em;
+}
+.add-form .icon {
+  font-size: 1.3rem;
+  min-width: 1.7em;
+  text-align: center;
+  opacity: 0.85;
+}
+.add-form input[type="text"],
+.add-form input[type="date"] {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--movie-bg);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.2s, background 0.2s;
+}
+.add-form input[type="text"]:focus,
+.add-form input[type="date"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--container-bg);
+}
+.add-form select {
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--movie-bg);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.2s, background 0.2s;
+}
+.add-form select:focus {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--container-bg);
+}
+.add-form .genre-checkbox-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.2em 0.7em;
+  margin: 0.5em 0 0.5em 0.2em;
+  width: 100%;
+}
+.add-form .genre-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  font-size: 1em;
+  min-width: 120px;
+}
+.add-form .genre-checkbox input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.2em;
+}
+.add-form .genre-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  cursor: pointer;
+  font-size: 1em;
+}
+.add-form .genre-icon {
+  font-size: 1.1em;
+  margin-right: 0.2em;
+  vertical-align: middle;
+}
+.add-form button[type="submit"] {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 0;
+  font-size: 1.08rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  width: 100%;
+  transition: background 0.2s;
+}
+.add-form button[type="submit"]:hover {
+  background: #005fa3;
+}
+.add-form textarea[name="plot"] {
+  min-height: 90px;
+  resize: vertical;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--movie-bg);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.2s, background 0.2s;
+  width: 100%;
+}
+.add-form textarea[name="plot"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--container-bg);
+}
+body.dark-mode .add-form {
+  background: var(--container-bg);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+body.dark-mode .add-form input[type="text"],
+body.dark-mode .add-form input[type="date"],
+body.dark-mode .add-form select {
+  background: #23272a;
+  color: var(--text-color);
+  border-color: #2c2f33;
+}
+body.dark-mode .add-form input[type="text"]:focus,
+body.dark-mode .add-form input[type="date"]:focus,
+body.dark-mode .add-form select:focus {
+  background: #181a1b;
+  border-color: var(--accent);
+}
+body.dark-mode .add-form textarea[name="plot"] {
+  background: #23272a;
+  color: var(--text-color);
+  border-color: #2c2f33;
+}
+body.dark-mode .add-form textarea[name="plot"]:focus {
+  background: #181a1b;
+  border-color: var(--accent);
+}
+@media (max-width: 900px) {
+  .add-form {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .add-form .genre-checkbox-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .add-form {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .add-form .genre-checkbox-list {
+    grid-template-columns: 1fr;
+  }
+}

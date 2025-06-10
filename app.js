@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/partials', express.static(path.join(__dirname, 'views', 'partials')));
@@ -30,22 +31,22 @@ app.get('/', async (req, res) => {
     console.log('Fetching movies from the database...');
     try {
         const movies = await moviesCollection.find(
-    {
-        title: { $exists: true, $ne: null },
-        poster: { $exists: true, $ne: null },
-        released: { $exists: true, $ne: null }
-    },
-    {
-        projection: { title: 1, poster: 1, released: 1 }
-    }
-)
-.sort({ released: -1 })
-.limit(10)
-.toArray();
+            {
+                title: { $exists: true, $ne: null },
+                poster: { $exists: true, $ne: null },
+                released: { $exists: true, $ne: null }
+            },
+            {
+                projection: { title: 1, poster: 1, released: 1 }
+            }
+        )
+        .sort({ released: -1 })
+        .limit(10)
+        .toArray();
         console.log('Movies fetched successfully');
-        console.log(movies);
-        // Render the index.ejs template with the movies data
-        res.render('index', { movies });
+        // Lee el mensaje de éxito desde query param
+        const success = req.query.success === '1';
+        res.render('index', { movies, success });
     } catch (err) {
         console.error('Error fetching movies:', err);
         res.status(500).send('Error fetching movies');
@@ -119,7 +120,37 @@ app.get('/movies', async (req, res) => {
     }
 });
 
+app.get('/movies/add-form', async (req, res) => {
+    try {
+        res.render('add-form');
+    } catch (err) {
+        console.error('Error rendering add-form:', err);
+        res.status(500).send('Error rendering add-form');
+    }
+});
 
+app.post('/movies/add-form', async (req, res) => {
+    try {
+        const newMovie = {
+            title: req.body.title,
+            released: req.body.released ? new Date(req.body.released) : null,
+            poster: req.body.poster,
+            director: req.body.director,
+            cast: req.body.cast ? req.body.cast.split(',').map(actor => actor.trim()) : [],
+            plot: req.body.plot,
+            genres: req.body.genres ? req.body.genres.split(',').map(genre => genre.trim()) : [],
+            type: req.body.type
+        };
+
+        const result = await moviesCollection.insertOne(newMovie);
+       console.log('New movie added:', result.insertedId);
+        req.app.locals.successMessage = 'Película añadida con éxito';
+        res.redirect('/?success=1');
+    } catch (err) {
+        console.error('Error adding movie:', err);
+        res.status(500).send('Error adding movie');
+    }
+});
 
 async function connectDB() {
     try {
@@ -138,14 +169,5 @@ async function connectDB() {
 
 connectDB();
 
-app.get('/genres', async (req, res) => {
-    try {
-        const genres = await moviesCollection.distinct('genres');
-        console.log('Available genres:', genres);
-        res.json({ genres });
-    } catch (err) {
-        console.error('Error fetching genres:', err);
-        res.status(500).send('Error fetching genres');
-    }
-});
+
 console.log(`Visit http://localhost:${PORT} to access the application`);

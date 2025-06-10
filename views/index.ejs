@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <%- include('partials/top-navbar') %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert-success" id="success-alert">
+        ¡Película añadida con éxito!
+      </div>
+      <script>
+        setTimeout(function() {
+          var alert = document.getElementById('success-alert');
+          if(alert) alert.style.display = 'none';
+        }, 3000);
+      </script>
+    <% } %>
     <%- include('partials/navbar') %>
     <div class="container">
         <h1>MongoDB Movies</h1>

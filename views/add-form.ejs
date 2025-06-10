@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Película</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles-add-form.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <%- include('partials/top-navbar') %>
+ <form method="post" action="/movies/add-form" class="add-form">
+    <h2>Añadir Película</h2>
+        <label class="icon-label">
+            <span class="icon">🎬</span>
+            <select name="type">
+                <option value="">Tipo</option>
+                <option value="movie">Película</option>
+                <option value="series">Serie</option>
+            </select>
+        </label>
+        <label class="icon-label"><span class="icon">🎬</span><input type="text" name="title" placeholder="Título de la película"></label>
+        <label class="icon-label"><span class="icon">📅</span><input type="date" name="released" placeholder="Fecha de estreno"></label>
+        <label class="icon-label">
+            <span class="icon">🏷️</span>Géneros:
+            <span class="genre-checkbox-list">
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Action" id="genre-action"><label for="genre-action"><span class="genre-icon">🔫</span>Acción</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Adventure" id="genre-adventure"><label for="genre-adventure"><span class="genre-icon">🏔️</span>Aventura</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Animation" id="genre-animation"><label for="genre-animation"><span class="genre-icon">🎨</span>Animación</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Biography" id="genre-biography"><label for="genre-biography"><span class="genre-icon">👤</span>Biografía</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Comedy" id="genre-comedy"><label for="genre-comedy"><span class="genre-icon">😂</span>Comedia</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Crime" id="genre-crime"><label for="genre-crime"><span class="genre-icon">🔪</span>Crimen</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Documentary" id="genre-documentary"><label for="genre-documentary"><span class="genre-icon">📚</span>Documental</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Drama" id="genre-drama"><label for="genre-drama"><span class="genre-icon">🎭</span>Drama</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Family" id="genre-family"><label for="genre-family"><span class="genre-icon">👨‍👩‍👧‍👦</span>Familiar</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Fantasy" id="genre-fantasy"><label for="genre-fantasy"><span class="genre-icon">✨</span>Fantasía</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Film-Noir" id="genre-filmnoir"><label for="genre-filmnoir"><span class="genre-icon">🕵️</span>Cine negro</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="History" id="genre-history"><label for="genre-history"><span class="genre-icon">🏛️</span>Historia</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Horror" id="genre-horror"><label for="genre-horror"><span class="genre-icon">👻</span>Terror</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Music" id="genre-music"><label for="genre-music"><span class="genre-icon">🎵</span>Música</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Musical" id="genre-musical"><label for="genre-musical"><span class="genre-icon">🎤</span>Musical</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Mystery" id="genre-mystery"><label for="genre-mystery"><span class="genre-icon">🕵️‍♂️</span>Misterio</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="News" id="genre-news"><label for="genre-news"><span class="genre-icon">📰</span>Noticias</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Romance" id="genre-romance"><label for="genre-romance"><span class="genre-icon">💖</span>Romance</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Sci-Fi" id="genre-scifi"><label for="genre-scifi"><span class="genre-icon">🚀</span>Ciencia ficción</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Short" id="genre-short"><label for="genre-short"><span class="genre-icon">⏱️</span>Corto</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Sport" id="genre-sport"><label for="genre-sport"><span class="genre-icon">⚽</span>Deporte</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Talk-Show" id="genre-talkshow"><label for="genre-talkshow"><span class="genre-icon">🎤</span>Talk-Show</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Thriller" id="genre-thriller"><label for="genre-thriller"><span class="genre-icon">🔫</span>Suspense</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="War" id="genre-war"><label for="genre-war"><span class="genre-icon">🪖</span>Guerra</label></span>
+                <span class="genre-checkbox"><input type="checkbox" name="genre" value="Western" id="genre-western"><label for="genre-western"><span class="genre-icon">🤠</span>Western</label></span>
+            </span>
+        </label>
+        <label class="icon-label"><span class="icon">🎥</span><input type="text" name="director" placeholder="Director"></label>
+        <label class="icon-label"><span class="icon">👥</span><input type="text" name="cast" placeholder="Reparto"></label>
+        <label class="icon-label"><span class="icon">📝</span><textarea name="plot" placeholder="Sinopsis"></textarea></label>
+        <label class="icon-label"><span class="icon">📸</span><input type="url" name="poster" placeholder="URL del póster"></label>
+        <button type="submit"><span class="icon">⏫</span>  Añadir película/serie</button>
+    </form>
+</body>
+</html>
