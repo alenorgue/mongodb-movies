@@ -76,7 +76,11 @@ app.get('/movies', async (req, res) => {
             }
         }
         if (req.query.genre) {
-            filter.genres = { $regex: req.query.genre, $options: 'i' };
+            if (Array.isArray(req.query.genre)) {
+                filter.genres = { $in: req.query.genre };
+            } else if (typeof req.query.genre === 'string' && req.query.genre.length > 0) {
+                filter.genres = req.query.genre;
+            }
         }
         if (req.query.director) {
             filter.directors = { $regex: req.query.director, $options: 'i' };
@@ -91,17 +95,21 @@ app.get('/movies', async (req, res) => {
             filter.type = { $regex: req.query.type, $options: 'i' };
         }
 
+        let sort = { released: -1 };
+        if (req.query.sortOrder === 'asc') {
+            sort = { released: 1 };
+        }
+
       const movies = await moviesCollection.aggregate([
-  { $match: filter },
-  { $group: {
-      _id: { title: "$title", released: "$released", poster: "$poster" },
-      doc: { $first: "$$ROOT" }
-    }
-  },
-  { $replaceRoot: { newRoot: "$doc" } },
-  { $sort: { released: -1 } },
-  { $limit: 10 }
-]).toArray();
+            { $match: filter },
+            { $group: {
+                _id: { title: "$title", released: "$released", poster: "$poster" },
+                doc: { $first: "$$ROOT" }
+            } },
+            { $replaceRoot: { newRoot: "$doc" } },
+            { $sort: sort },
+            { $limit: 10 }
+        ]).toArray();
 
         console.log('Movies fetched successfully');
         res.render('index', { movies });
