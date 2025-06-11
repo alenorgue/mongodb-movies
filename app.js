@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const { title } = require('process');
 const dotenv = require('dotenv');
 
@@ -139,7 +139,8 @@ app.post('/movies/add-form', async (req, res) => {
             cast: req.body.cast ? req.body.cast.split(',').map(actor => actor.trim()) : [],
             plot: req.body.plot,
             genres: req.body.genres ? req.body.genres.split(',').map(genre => genre.trim()) : [],
-            type: req.body.type
+            type: req.body.type,
+            runtime: req.body.runtime ? parseInt(req.body.runtime, 10) : null
         };
 
         const result = await moviesCollection.insertOne(newMovie);
@@ -149,6 +150,23 @@ app.post('/movies/add-form', async (req, res) => {
     } catch (err) {
         console.error('Error adding movie:', err);
         res.status(500).send('Error adding movie');
+    }
+});
+
+app.get('/movies/:id', async (req, res) => {
+    try {
+        const movieId = req.params.id;
+        if (!ObjectId.isValid(movieId)) {
+            return res.status(400).send('ID de película no válido');
+        }
+        const movie = await moviesCollection.findOne({ _id: new ObjectId(movieId) });
+        if (!movie) {
+            return res.status(404).send('Película no encontrada');
+        }
+        res.render('movie-detail', { movie });
+    } catch (err) {
+        console.error('Error fetching movie detail:', err);
+        res.status(500).send('Error al cargar detalles de la película');
     }
 });
 

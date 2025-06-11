@@ -374,6 +374,7 @@ body.dark-mode nav input[type="number"]:focus {
   z-index: 2000;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   margin-bottom: 2.5rem;
+  border-radius: 1rem;
 }
 .top-navbar ul {
   display: flex;

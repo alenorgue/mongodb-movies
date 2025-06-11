@@ -33,7 +33,9 @@
                 <div class="movie">
                     <h2><%= movie.title %></h2>
                     <% if (movie.poster) { %>
-                        <img src="<%= movie.poster %>" alt="<%= movie.title %> poster" style="max-width:200px;">
+                        <a href="/movies/<%= movie._id %>">
+                          <img src="<%= movie.poster %>" alt="<%= movie.title %> poster" style="max-width:200px;">
+                        </a>
                     <% } %>
                     <p>Fecha de lanzamiento: <%= movie.released ? movie.released.toISOString().split('T')[0] : 'N/A' %></p>
                 </div>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= movie.title %> | Detalle</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials/top-navbar') %>
+  <button class="toggle-theme-btn" onclick="toggleTheme()">
+    <span id="theme-label">Modo oscuro</span>
+    <span class="toggle-switch">
+      <span class="toggle-slider"></span>
+    </span>
+  </button>
+  <div class="container movie-detail-container">
+    <div class="movie-detail-card">
+      <div class="movie-detail-poster">
+        <img src="<%= movie.poster || '/default-poster.png' %>" alt="Poster de <%= movie.title %>" onerror="this.onerror=null;this.src='/default-poster.png';">
+      </div>
+      <div class="movie-detail-info">
+        <h1><%= movie.title %></h1>
+        <% if (movie.year) { %>
+          <p class="movie-detail-year"><i class="fa fa-calendar"></i> <%= movie.year %></p>
+        <% } %>
+        <% if (movie.type) { %>
+          <span class="movie-detail-type"><%= movie.type %></span>
+        <% } %>
+        <% if (movie.genres && movie.genres.length) { %>
+          <div class="movie-detail-genres">
+            <% movie.genres.forEach(function(genre) { %>
+              <span class="genre-badge"><%= genre %></span>
+            <% }) %>
+          </div>
+        <% } %>
+        <% if (movie.directors && movie.directors.length) { %>
+          <p><strong>Director:</strong> <%= movie.directors.join(', ') %></p>
+        <% } %>
+        <% if (movie.cast && movie.cast.length) { %>
+          <p><strong>Reparto:</strong> <%= movie.cast.join(', ') %></p>
+        <% } %>
+        <% if (movie.plot) { %>
+          <p class="movie-detail-plot"><%= movie.plot %></p>
+        <% } %>
+        <% if (movie.runtime) { %>
+          <p><strong>Duración:</strong> <%= movie.runtime %> min</p>
+        <% } %>
+        <% if (movie.countries && movie.countries.length) { %>
+          <p><strong>País:</strong> <%= movie.countries.join(', ') %></p>
+        <% } %>
+        <% if (movie.languages && movie.languages.length) { %>
+          <p><strong>Idioma:</strong> <%= movie.languages.join(', ') %></p>
+        <% } %>
+        <% if (movie.released) { %>
+          <p><strong>Estreno:</strong> <%= movie.released %></p>
+        <% } %>
+        <% if (movie.imdb && movie.imdb.rating) { %>
+          <p><strong>IMDb:</strong> <%= movie.imdb.rating %> (<%= movie.imdb.votes %> votos)</p>
+        <% } %>
+        <% if (movie.awards && movie.awards.text) { %>
+          <p><strong>Premios:</strong> <%= movie.awards.text %></p>
+        <% } %>
+        <% if (movie.fullplot) { %>
+          <details>
+            <summary>Ver sinopsis completa</summary>
+            <p><%= movie.fullplot %></p>
+          </details>
+        <% } %>
+        <a href="/" class="btn btn-back">&larr; Volver</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-label').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+    }
+    // Mantener preferencia al recargar
+    if(localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('theme-label').textContent = 'Modo claro';
+    }
+  </script>
+  <style>
+  .movie-detail-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--container-bg);
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  .movie-detail-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .movie-detail-poster img {
+    width: 260px;
+    max-width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .movie-detail-info {
+    flex: 1 1 350px;
+    min-width: 250px;
+  }
+  .movie-detail-genres {
+    margin: 0.5rem 0 1rem 0;
+  }
+  .genre-badge {
+    display: inline-block;
+    background: var(--genre-bg, #e0e0e0);
+    color: var(--genre-color, #333);
+    border-radius: 0.7em;
+    padding: 0.2em 0.8em;
+    margin: 0 0.3em 0.3em 0;
+    font-size: 0.95em;
+  }
+  .movie-detail-type {
+    display: inline-block;
+    background: #4e54c8;
+    color: #fff;
+    border-radius: 0.5em;
+    padding: 0.2em 0.7em;
+    margin-left: 0.5em;
+    font-size: 0.95em;
+  }
+  .movie-detail-year {
+    color: var(--accent-color, #4e54c8);
+    font-weight: 500;
+    margin-bottom: 0.5em;
+  }
+  .movie-detail-plot {
+    margin: 1em 0;
+    font-size: 1.1em;
+  }
+  .btn-back {
+    display: inline-block;
+    margin-top: 1.5em;
+    background: var(--accent-color, #4e54c8);
+    color: #fff;
+    padding: 0.6em 1.2em;
+    border-radius: 0.5em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-back:hover {
+    background: #222;
+  }
+  .toggle-theme-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-color, #4e54c8);
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.6em 1.2em;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .toggle-switch {
+    width: 2.5em;
+    height: 1.2em;
+    background: #fff;
+    border-radius: 1em;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .toggle-slider {
+    width: 1.2em;
+    height: 1.2em;
+    background: var(--accent-color, #4e54c8);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s;
+  }
+  body.dark-mode .toggle-switch {
+    background: #333;
+  }
+  body.dark-mode .toggle-slider {
+    transform: translateX(1.3em);
+  }
+  @media (max-width: 700px) {
+    .movie-detail-card {
+      flex-direction: column;
+      align-items: center;
+    }
+    .movie-detail-info {
+      min-width: unset;
+    }
+  }
+  </style>
+</body>
+</html>
