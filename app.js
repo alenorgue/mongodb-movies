@@ -56,14 +56,12 @@ app.get('/', async (req, res) => {
 app.get('/movies', async (req, res) => {
     console.log('Fetching movies from the database...');
     try {
-        // Filtro base: solo películas con los campos requeridos
         const filter = {
             title: { $exists: true, $ne: null },
             poster: { $exists: true, $ne: null },
             released: { $exists: true, $ne: null }
         };
-
-        // Añadir criterios de búsqueda según los query params
+        // Filtros avanzados
         if (req.query.title) {
             filter.title = { ...filter.title, $regex: req.query.title, $options: 'i' };
         }
@@ -95,13 +93,19 @@ app.get('/movies', async (req, res) => {
         if (req.query.type) {
             filter.type = { $regex: req.query.type, $options: 'i' };
         }
-
         let sort = { released: -1 };
         if (req.query.sortOrder === 'asc') {
             sort = { released: 1 };
         }
-
-      const movies = await moviesCollection.aggregate([
+        // Paginación
+        const page = parseInt(req.query.page) > 0 ? parseInt(req.query.page) : 1;
+        const limit = 10;
+        const skip = (page - 1) * limit;
+        // Contar total de resultados
+        const totalResults = await moviesCollection.countDocuments(filter);
+        const totalPages = Math.ceil(totalResults / limit);
+        // Consulta paginada
+        const movies = await moviesCollection.aggregate([
             { $match: filter },
             { $group: {
                 _id: { title: "$title", released: "$released", poster: "$poster" },
@@ -109,11 +113,13 @@ app.get('/movies', async (req, res) => {
             } },
             { $replaceRoot: { newRoot: "$doc" } },
             { $sort: sort },
-            { $limit: 10 }
+            { $skip: skip },
+            { $limit: limit }
         ]).toArray();
-
-        console.log('Movies fetched successfully');
-        res.render('index', { movies });
+        // Pasar filtros activos para mantenerlos en la paginación
+        const filters = { ...req.query };
+        delete filters.page;
+        res.render('index', { movies, page, totalPages, totalResults, filters });
     } catch (err) {
         console.error('Error fetching movies:', err);
         res.status(500).send('Error fetching movies');

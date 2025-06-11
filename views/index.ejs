@@ -42,6 +42,39 @@
             <% }); %>
         </div>
     </div>
+    <% if (typeof page !== 'undefined' && typeof totalPages !== 'undefined' && totalPages > 1) { %>
+    <div class="pagination-bar floating-pagination">
+        <nav aria-label="Paginación simple">
+            <% function buildQuery(pageNum) {
+                var params = [];
+                if (typeof filters === 'object') {
+                  for (var key in filters) {
+                    if (Array.isArray(filters[key])) {
+                      filters[key].forEach(function(val) { params.push(encodeURIComponent(key) + '=' + encodeURIComponent(val)); });
+                    } else if (filters[key]) {
+                      params.push(encodeURIComponent(key) + '=' + encodeURIComponent(filters[key]));
+                    }
+                  }
+                }
+                params.push('page=' + pageNum);
+                return params.length ? '?' + params.join('&') : '';
+            } %>
+            <div class="pagination-controls">
+                <% if (page > 1) { %>
+                    <a href="/movies<%= buildQuery(page-1) %>" class="page-link" title="Anterior">&laquo;</a>
+                <% } else { %>
+                    <span class="page-link disabled">&laquo;</span>
+                <% } %>
+                <span class="page-link current">Página <%= page %> de <%= totalPages %></span>
+                <% if (page < totalPages) { %>
+                    <a href="/movies<%= buildQuery(page+1) %>" class="page-link" title="Siguiente">&raquo;</a>
+                <% } else { %>
+                    <span class="page-link disabled">&raquo;</span>
+                <% } %>
+            </div>
+        </nav>
+    </div>
+    <% } %>
     <script>
       function toggleTheme() {
         const isDark = document.body.classList.toggle('dark-mode');
