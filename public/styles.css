@@ -23,7 +23,7 @@ body {
 .container {
   background: var(--container-bg);
   max-width: 70vw;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   padding: 2rem 2.5rem 2.5rem 2.5rem;
@@ -33,6 +33,7 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   min-width: 0;
+  margin-right: 15rem;
 }
 h1 {
   text-align: center;
@@ -361,7 +362,7 @@ body.dark-mode nav input[type="number"]:focus {
 .top-navbar {
   position: sticky;
   top: 0;
-  left: 25vw;
+  left: 23vw;
   width: 50vw;
   max-width: 100vw;
   height: 70px;

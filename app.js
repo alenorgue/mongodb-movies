@@ -153,6 +153,46 @@ app.post('/movies/add-form', async (req, res) => {
     }
 });
 
+app.get('/movies/recommendation', async (req, res) => {
+    const genres = [
+        { name: 'Action', icon: '🔫' },
+        { name: 'Adventure', icon: '🏔️' },
+        { name: 'Animation', icon: '🎨' },
+        { name: 'Biography', icon: '👤' },
+        { name: 'Comedy', icon: '😂' },
+        { name: 'Crime', icon: '🔪' },
+        { name: 'Documentary', icon: '📚' },
+        { name: 'Drama', icon: '🎭' },
+        { name: 'Family', icon: '👨‍👩‍👧‍👦' },
+        { name: 'Fantasy', icon: '✨' },
+        { name: 'Film-Noir', icon: '🕵️' },
+        { name: 'History', icon: '🏛️' },
+        { name: 'Horror', icon: '👻' },
+        { name: 'Music', icon: '🎵' },
+        { name: 'Musical', icon: '🎤' },
+        { name: 'Mystery', icon: '🕵️‍♂️' },
+        { name: 'News', icon: '📰' },
+        { name: 'Romance', icon: '💖' },
+        { name: 'Sci-Fi', icon: '🚀' },
+        { name: 'Short', icon: '⏱️' },
+        { name: 'Sport', icon: '⚽' },
+        { name: 'Talk-Show', icon: '🎤' },
+        { name: 'Thriller', icon: '🔫' },
+        { name: 'War', icon: '🪖' },
+        { name: 'Western', icon: '🤠' }
+    ];
+    let recommendations = null;
+    let selectedGenre = req.query.genre;
+    if (selectedGenre) {
+        recommendations = await moviesCollection.aggregate([
+            { $match: { genres: selectedGenre, poster: { $exists: true, $ne: null } } },
+            { $sample: { size: 2 } },
+            { $project: { title: 1, poster: 1, released: 1, _id: 1 } }
+        ]).toArray();
+    }
+    res.render('recommendation', { genres, recommendations, selectedGenre });
+});
+
 app.get('/movies/:id', async (req, res) => {
     try {
         const movieId = req.params.id;
@@ -168,6 +208,16 @@ app.get('/movies/:id', async (req, res) => {
         console.error('Error fetching movie detail:', err);
         res.status(500).send('Error al cargar detalles de la película');
     }
+});
+
+// Middleware para manejar errores 404
+app.use((req, res, next) => {
+    res.status(404).render('404', { title: 'Página no encontrada' });
+});
+// Middleware para manejar errores internos del servidor
+app.use((err, req, res, next) => {
+    console.error('Error interno del servidor:', err);
+    res.status(500).render('error', { title: 'Error interno del servidor', error: err });
 });
 
 async function connectDB() {

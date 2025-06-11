@@ -10,8 +10,14 @@
 </head>
 <body>
     <%- include('partials/top-navbar') %>
+    <button class="toggle-theme-btn" onclick="toggleTheme()">
+      <span id="theme-label">Modo oscuro</span>
+      <span class="toggle-switch">
+        <span class="toggle-slider"></span>
+      </span>
+    </button>
  <form method="post" action="/movies/add-form" class="add-form">
-    <h2>Añadir Película</h2>
+    <h2>Añadir Película/Serie</h2>
         <label class="icon-label">
             <span class="icon">🎬</span>
             <select name="type">
@@ -60,5 +66,16 @@
         <label class="icon-label"><span class="icon">📸</span><input type="url" name="poster" placeholder="URL del póster"></label>
         <button type="submit"><span class="icon">⏫</span>  Añadir película/serie</button>
     </form>
+    <script>
+      function toggleTheme() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.getElementById('theme-label').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+      }
+      if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-label').textContent = 'Modo claro';
+      }
+    </script>
 </body>
 </html>

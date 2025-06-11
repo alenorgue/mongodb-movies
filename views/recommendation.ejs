@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recomendación por género</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .recommend-container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: var(--container-bg);
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 2.5rem 2rem 2rem 2rem;
+      text-align: center;
+    }
+    .genre-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.4rem;
+      margin: 2rem 0 2.5rem 0;
+      justify-items: center;
+    }
+    .genre-btn {
+      background: var(--movie-bg);
+      border: 2px solid var(--accent);
+      border-radius: 1.2em;
+      padding: 0.7em 0.4em 0.4em 0.4em;
+      font-size: 1.1em;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s, transform 0.1s;
+      min-width: 70px;
+      min-height: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .genre-btn.selected, .genre-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: scale(1.07);
+    }
+    .genre-btn .genre-icon {
+      font-size: 1.3em;
+      margin-bottom: 0.1em;
+    }
+    .genre-btn span:last-child {
+      font-size: 0.85em;
+      margin-top: 0.1em;
+    }
+    .recommend-title {
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .recommend-movies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .recommend-movie-card {
+      background: var(--movie-bg);
+      border-radius: 1.3rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+      padding: 2.2rem 2.2rem 2.2rem 2.2rem;
+      max-width: 340px;
+      min-width: 240px;
+      text-align: center;
+      transition: background 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .recommend-movie-card img {
+      width: 210px;
+      max-width: 100%;
+      border-radius: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      margin-bottom: 0.7em;
+    }
+    .recommend-movie-card h3 {
+      font-size: 1.1em;
+      color: var(--accent);
+      margin: 0.5em 0 0.2em 0;
+    }
+    .recommend-movie-card p {
+      font-size: 0.98em;
+      margin: 0.2em 0 0 0;
+    }
+    .recommend-movie-card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 0.7em;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .recommend-movie-card a:hover {
+      color: #222;
+      text-decoration: underline;
+    }
+    .toggle-theme-btn {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      background: var(--container-bg);
+      border: 2px solid var(--accent);
+      border-radius: 999px;
+      padding: 0.3rem 1.2rem 0.3rem 0.6rem;
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .toggle-theme-btn:hover {
+      background: #005fa3;
+    }
+    .toggle-theme-btn .toggle-switch {
+      margin-left: 0.7rem;
+      width: 38px;
+      height: 22px;
+      background: var(--movie-bg);
+      border-radius: 999px;
+      position: relative;
+      transition: background 0.2s;
+      border: 1.5px solid var(--accent);
+      display: inline-block;
+    }
+    .toggle-theme-btn .toggle-slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      transition: left 0.2s, background 0.2s;
+    }
+    body.dark-mode .toggle-theme-btn {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    body.dark-mode .toggle-theme-btn .toggle-switch {
+      background: #222b;
+    }
+    body.dark-mode .toggle-theme-btn .toggle-slider {
+      background: var(--accent);
+      left: 18px;
+    }
+    @media (max-width: 700px) {
+      .recommend-movies {
+        flex-direction: column;
+        align-items: center;
+      }
+      .recommend-movie-card {
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/top-navbar') %>
+  <div class="recommend-container">
+    <div class="recommend-title">Recomendación por género</div>
+    <div class="genre-grid">
+      <% genres.forEach(function(genre) { %>
+        <form method="get" action="/movies/recommendation" style="margin:0;">
+          <input type="hidden" name="genre" value="<%= genre.name %>">
+          <button type="submit" class="genre-btn<%= selectedGenre === genre.name ? ' selected' : '' %>">
+            <span class="genre-icon"><%= genre.icon %></span>
+            <span><%= genre.name %></span>
+          </button>
+        </form>
+      <% }); %>
+    </div>
+    <% if (recommendations && recommendations.length) { %>
+      <div class="recommend-movies">
+        <% recommendations.forEach(function(movie) { %>
+          <div class="recommend-movie-card">
+            <a href="/movies/<%= movie._id %>">
+              <img src="<%= movie.poster %>" alt="<%= movie.title %> poster" onerror="this.onerror=null;this.src='/default-poster.png';">
+            </a>
+            <h3><%= movie.title %></h3>
+            <p><%= movie.released ? (movie.released.toISOString ? movie.released.toISOString().split('T')[0] : movie.released) : '' %></p>
+            <a href="/movies/<%= movie._id %>">Ver detalles</a>
+          </div>
+        <% }); %>
+      </div>
+    <% } else if (selectedGenre) { %>
+      <p style="margin-top:2em; color:var(--accent); font-weight:500;">No se encontraron películas para este género.</p>
+    <% } %>
+    <button class="toggle-theme-btn" onclick="toggleTheme()">
+      <span id="theme-label">Modo oscuro</span>
+      <span class="toggle-switch">
+        <span class="toggle-slider"></span>
+      </span>
+    </button>
+  </div>
+  <script>
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-label').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+    }
+    if(localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('theme-label').textContent = 'Modo claro';
+    }
+  </script>
+</body>
+</html>
