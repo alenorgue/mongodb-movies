@@ -27,7 +27,6 @@ let moviesCollection;
 
 //Routes
 app.get('/', async (req, res) => {
-
     console.log('Fetching movies from the database...');
     try {
         const movies = await moviesCollection.find(
@@ -46,10 +45,11 @@ app.get('/', async (req, res) => {
         console.log('Movies fetched successfully');
         // Lee el mensaje de éxito desde query param
         const success = req.query.success === '1';
-        res.render('index', { movies, success });
+        // Pasar filtros vacíos para evitar errores en la vista
+        res.render('index', { movies, success, filters: {} });
     } catch (err) {
         console.error('Error fetching movies:', err);
-        res.status(500).send('Error fetching movies');
+        res.status(500).render('error', { title: 'Error interno del servidor', error: err });
     }
 });
 
