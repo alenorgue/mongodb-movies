@@ -76,7 +76,7 @@ app.get('/movies', async (req, res) => {
         }
         if (req.query.genre) {
             if (Array.isArray(req.query.genre)) {
-                filter.genres = { $in: req.query.genre };
+                filter.genres = { $all: req.query.genre };
             } else if (typeof req.query.genre === 'string' && req.query.genre.length > 0) {
                 filter.genres = req.query.genre;
             }
@@ -119,6 +119,18 @@ app.get('/movies', async (req, res) => {
         // Pasar filtros activos para mantenerlos en la paginación
         const filters = { ...req.query };
         delete filters.page;
+        // Normalizar filters.genre a array siempre
+        if (filters.genre) {
+            if (Array.isArray(filters.genre)) {
+                // ya es array
+            } else if (typeof filters.genre === 'string') {
+                filters.genre = [filters.genre];
+            } else {
+                filters.genre = [];
+            }
+        } else {
+            filters.genre = [];
+        }
         res.render('index', { movies, page, totalPages, totalResults, filters });
     } catch (err) {
         console.error('Error fetching movies:', err);
