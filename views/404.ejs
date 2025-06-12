@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title || 'Error' %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials/top-navbar') %>
+  <div class="container">
+    <h1 style="color: #c00;"> Error 404 </h1>
+    <p>La página que estás buscando no existe o ha sido movida.</p>
+    <p>Por favor, verifica la URL o vuelve a la página de inicio.</p>
+    <p>Si el problema persiste, contacta con el administrador del sitio.</p>
+    <button class="toggle-theme-btn" onclick="toggleTheme()">
+      <span id="theme-label">Modo oscuro</span>
+      <span class="toggle-switch">
+        <span class="toggle-slider"></span>
+      </span>
+    </button>
+    <a href="/" class="btn btn-back">&larr; Volver al inicio</a>
+  </div>
+</body>
+</html>
+<script>
+      function toggleTheme() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        document.getElementById('theme-label').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+      }
+      // Mantener preferencia al recargar
+      if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-label').textContent = 'Modo claro';
+      }
+    </script>

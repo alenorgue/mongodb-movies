@@ -8,11 +8,10 @@
 <body>
   <%- include('partials/top-navbar') %>
   <div class="container">
-    <h1 style="color: #c00;">Error</h1>
+    <h1 style="color: #c00;"> <%= error %></h1>
     <p><%= error && error.message ? error.message : 'Ha ocurrido un error inesperado.' %></p>
-    <% if (error && error.stack) { %>
-      <pre style="background:#f8d7da;color:#721c24;padding:1em;border-radius:8px;overflow-x:auto;"><%= error.stack %></pre>
-    <% } %>
+    <p>Por favor, inténtalo de nuevo más tarde.</p>
+    <p>Si el problema persiste, contacta con el administrador del sitio.</p>
     <a href="/" class="btn btn-back">&larr; Volver al inicio</a>
   </div>
 </body>
